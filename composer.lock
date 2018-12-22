@@ -4,9 +4,68 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "c37cd4cbba10c18fc1349c57c15a57da",
-    "content-hash": "83f09d56936616ee39a756a1dfaaa897",
+    "hash": "86a015bebd3064b44f9435cf5aeaa004",
+    "content-hash": "58d4d5da748d5ccb212717553a4c1f69",
     "packages": [
+        {
+            "name": "dianwoung/large-file-upload",
+            "version": "0.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/laravel-admin-extensions/large-file-upload.git",
+                "reference": "028ccc4cbeb610a4ea0023653b0f78e01445ce0a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/laravel-admin-extensions/large-file-upload/zipball/028ccc4cbeb610a4ea0023653b0f78e01445ce0a",
+                "reference": "028ccc4cbeb610a4ea0023653b0f78e01445ce0a",
+                "shasum": "",
+                "mirrors": [
+                    {
+                        "url": "https://dl.laravel-china.org/%package%/%reference%.%type%",
+                        "preferred": true
+                    }
+                ]
+            },
+            "require": {
+                "encore/laravel-admin": "~1.6",
+                "peinhu/aetherupload-laravel": "~1.0",
+                "php": ">=7.0.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~6.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Encore\\LargeFileUpload\\LargeFileUploadServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Encore\\LargeFileUpload\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Dian Wang",
+                    "email": "dian126@foxmail.com"
+                }
+            ],
+            "description": "An extension of laravel-admin for uploading large files",
+            "homepage": "https://github.com/Dianwoung/large-file-upload",
+            "keywords": [
+                "extension",
+                "laravel-admin"
+            ],
+            "time": "2018-10-30 02:21:48"
+        },
         {
             "name": "dnoegel/php-xdg-base-dir",
             "version": "0.1",
@@ -2092,6 +2151,65 @@
                 "random"
             ],
             "time": "2018-07-02 15:55:56"
+        },
+        {
+            "name": "peinhu/aetherupload-laravel",
+            "version": "v1.0.7",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/peinhu/AetherUpload-Laravel.git",
+                "reference": "5bd6a076d8c892b15984e04c36af718dc48d1873"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/peinhu/AetherUpload-Laravel/zipball/5bd6a076d8c892b15984e04c36af718dc48d1873",
+                "reference": "5bd6a076d8c892b15984e04c36af718dc48d1873",
+                "shasum": "",
+                "mirrors": [
+                    {
+                        "url": "https://dl.laravel-china.org/%package%/%reference%.%type%",
+                        "preferred": true
+                    }
+                ]
+            },
+            "require": {
+                "php": ">=5.5.9"
+            },
+            "suggest": {
+                "predis/predis": "Needed to support instant completion"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "AetherUpload\\AetherUploadServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "AetherUpload\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "Payne Hu",
+                    "email": "huyang110yahoo@gmail.com",
+                    "homepage": "http://www.2ndrenais.com",
+                    "role": "Manager"
+                }
+            ],
+            "description": "Upload large files for Laravel 上传 大文件 laravel包",
+            "keywords": [
+                "big",
+                "large",
+                "大文件"
+            ],
+            "time": "2017-12-14 08:05:03"
         },
         {
             "name": "php-http/guzzle6-adapter",

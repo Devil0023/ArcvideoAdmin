@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use Encore\Admin\Config\Config;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
