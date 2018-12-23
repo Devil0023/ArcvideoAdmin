@@ -91,8 +91,8 @@ class VideoController extends Controller
         $grid->status('转码状态')->display(function ($status){
             return config('transcode')['code'][$status];
         });
-        $grid->created_at('创建时间');
 
+        $grid->created_at('创建时间');
 
         $grid->disableExport();
 
@@ -157,25 +157,29 @@ class VideoController extends Controller
         $form = new Form(new VideoModel);
 
         $form->display('id', 'ID');
-        $form->text('title', '标题');
-        $form->largefile('filename', '视频');
+        $form->text('title', '标题')->rules('required');
+        $form->largefile('filename', '视频')->rules('required');
 
         $form->hidden('uid')->value(\Admin::user()->id);
         $form->hidden('status')->value(0);
         $form->hidden('taskid')->value(0);
 
-        // 表单提交前检查空间
-        $form->submitted(function (Form $form){
+        // 保存前检查空间
+        $form->saving(function (Form $form){
 
             try{
 
-                $filesize = filesize(config('input_path'). DIRECTORY_SEPARATOR.$form->filename);
+                $file = config('input_path'). DIRECTORY_SEPARATOR.$form->filename;
+
+                $filesize = filesize($file);
 
                 if($filesize > \Admin::user()->capacity_left){
-                    throw new \Exception("存储空间到达上限", 403);
+                    throw new \Exception("存储空间到达上限: ".$file."|".$filesize, 403);
                 }
 
             }catch (\Exception $e){
+
+                unlink($file);
 
                 $error = new MessageBag([
                     'title'   => '保存失败',
@@ -190,10 +194,16 @@ class VideoController extends Controller
         //保存后回掉
         $form->saved(function (Form $form){
             try{
-                //扣除剩余空间
+
+                $file = config('input_path'). DIRECTORY_SEPARATOR.$form->model()->filename;
+                $filesize = filesize($file);
+
+                (new VideoModel())->subtractCapacity(\Admin::user()->id, $filesize, $form->model()->id);//扣除剩余空间
                 (new TranscodeModel())->createTask($form->model()->id); // 通知转码
 
             }catch(\Exception $e){
+
+                unlink($file);
 
                 $error = new MessageBag([
                     'title'   => '保存失败',
