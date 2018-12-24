@@ -88,9 +88,18 @@ class VideoController extends Controller
 
         $grid->id('ID');
         $grid->title('标题');
+
+        $grid->template_id('转码模板')->display(function ($template_id){
+            $roles = json_decode(\Admin::user()->roles, true)[0];
+            $template_group = TranscodeModel::getTemplateGroupInfo($roles["template_group"]);
+            return @$template_group[$template_id]? : "";
+        });
+
         $grid->status('转码状态')->display(function ($status){
             return config('transcode')['code'][$status];
         });
+
+        $grid->taskid('taskid');
 
         $grid->created_at('创建时间');
 
@@ -124,9 +133,18 @@ class VideoController extends Controller
 
         $show->id('ID');
         $show->title('标题');
+
+        $show->template_id('转码模板')->as(function ($template_id){
+            $roles = json_decode(\Admin::user()->roles, true)[0];
+            $template_group = TranscodeModel::getTemplateGroupInfo($roles["template_group"]);
+            return @$template_group[$template_id]? : "";
+        });
+
         $show->status('转码状态')->as(function ($status){
             return config('transcode')['code'][$status];
         });
+
+        $show->taskid('taskid');
 
         if(intval($video->status) === config('transcode')["status"]["upload"]){
             $show->filename('预览')->unescape()->as(function ($filename){
@@ -154,11 +172,15 @@ class VideoController extends Controller
     protected function form()
     {
 
+        $roles = json_decode(\Admin::user()->roles, true)[0];
+
         $form = new Form(new VideoModel);
 
         $form->display('id', 'ID');
         $form->text('title', '标题')->rules('required');
         $form->largefile('filename', '视频')->rules('required');
+
+        $form->select('template_id', '转码模板')->options(TranscodeModel::getTemplateGroupInfo($roles['template_group']))->rules('required');
 
         $form->hidden('uid')->value(\Admin::user()->id);
         $form->hidden('status')->value(0);

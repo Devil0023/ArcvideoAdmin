@@ -12,5 +12,10 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect('/admin');
+    //return view('welcome');
+});
+
+Route::group(['prefix' => 'api', 'middleware' => ['web']], function(){
+    Route::post('/userinfo', 'ApiController@userinfo');
 });
