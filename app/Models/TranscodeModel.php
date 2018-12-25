@@ -15,7 +15,7 @@ Class TranscodeModel
 
         foreach(config($template_group)? explode(PHP_EOL, config($template_group)): [] as $template){
             $temp = explode(":", $template);
-            $info[$temp[0]] = $temp[1];
+            $info[$temp[0]] = str_replace("\r", '', $temp[1]);
         }
 
         return $info;
